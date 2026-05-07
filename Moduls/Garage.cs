@@ -18,6 +18,8 @@ namespace GarageV1.Moduls
 
         public int Capacity { get; }
 
+        public bool IsEmpty => parkedVehicleCount == 0;
+
         public bool Add(Vehicle vehicle)
         {
             if (parkedVehicleCount >= Capacity)
@@ -62,10 +64,29 @@ namespace GarageV1.Moduls
 
             for (int index = 0; index < parkedVehicleCount; index++)
             {
-                result[index] = parkedVehicles[index]!;
+                result[index] = parkedVehicles[index];
             }
 
             return result;
         }
+
+        public Dictionary<string, int> GetParkedVehicleTypeCounts()
+        {
+            var vehicleTypeCounts = new Dictionary<string, int>();
+
+            for (int index = 0; index < parkedVehicleCount; index++)
+            {
+                string vehicleType = parkedVehicles[index]!.GetType().Name;
+
+                if (!vehicleTypeCounts.TryAdd(vehicleType, 1))
+                {
+                    vehicleTypeCounts[vehicleType]++;
+                }
+            }
+
+            return vehicleTypeCounts;
+        }
+
+
     }
 }

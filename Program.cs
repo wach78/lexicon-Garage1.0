@@ -44,6 +44,10 @@ internal class Program
                     HandleListAllVehicles();
                     break;
 
+                case MenuChoice.ListVehicleTypes:
+                    HandleListVehiclesTypes();
+                    break;
+
                 default:
                     Console.WriteLine("Invalid choice");
                     break;
@@ -116,12 +120,40 @@ internal class Program
             return;
         }
 
+        if (!GarageHasVehicles(currentGarage))
+        {
+            return;
+        }
+
         Vehicle[] vehicles = currentGarage.GetParkedVehicles();
 
         foreach (Vehicle vehicle in vehicles)
         {
             Console.WriteLine(vehicle);
         }
+    }
+
+    private static void HandleListVehiclesTypes()
+    {
+        Garage? currentGarage = GetGarage();
+
+        if (currentGarage is null)
+        {
+            return;
+        }
+
+        if (!GarageHasVehicles(currentGarage))
+        {
+            return;
+        }
+
+        var vehicleTypeCounts = currentGarage.GetParkedVehicleTypeCounts();
+
+        foreach (KeyValuePair<string, int> vehicleTypeCount in vehicleTypeCounts)
+        {
+            Console.WriteLine($"{vehicleTypeCount.Key}: {vehicleTypeCount.Value}");
+        }
+
     }
 
     private static Garage? GetGarage()
@@ -134,4 +166,22 @@ internal class Program
 
         return garage;
     }
+
+    private static bool GarageHasVehicles(Garage? currentGarage)
+    {
+        if (currentGarage is null)
+        {
+            Console.WriteLine("You must create a garage first.");
+            return false;
+        }
+
+        if (currentGarage.IsEmpty)
+        {
+            Console.WriteLine("The garage is empty.");
+            return false;
+        }
+
+        return true;
+    }
+
 }
