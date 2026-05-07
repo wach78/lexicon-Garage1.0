@@ -1,10 +1,17 @@
 ﻿using GarageV1.Enums;
+using GarageV1.Moduls;
+using GarageV1.UI;
+using System.Runtime.CompilerServices;
 
 internal class Program
 {
+    private static Garage? garage = null;
+
     static void Main(string[] args)
     {
         bool isRunning = true;
+
+        
 
 
         while (isRunning)
@@ -12,16 +19,27 @@ internal class Program
             Menu();
 
 
-            MenuChoice numericChoice = (MenuChoice)choice;
+            MenuChoice? menuChoice = ConsoleInputReader.ReadMainMenuChoice();
 
-            switch (numericChoice)
+            if (menuChoice is null)
+            {
+                Console.WriteLine("Invalid choice");
+                Console.WriteLine();
+                continue;
+                
+            }
+
+            switch (menuChoice)
             {
                 case MenuChoice.Exit:
                     isRunning = false;
                     Console.WriteLine("Exit.");
                     break;
 
-               
+                case MenuChoice.CreateGarage:
+                    HandleCreateGarage();
+                    break;
+
 
                 default:
                     Console.WriteLine("Invalid choice");
@@ -37,7 +55,6 @@ internal class Program
 
     private static void Menu()
     {
-
         Console.Write(
             $"""
             Welcome to the main menu.
@@ -57,4 +74,22 @@ internal class Program
             """
         );
     }
+    private static void HandleCreateGarage()
+    {
+        Console.Write("Enter garage capacity: ");
+
+        int? capacity = ConsoleInputReader.ReadPositiveInt();
+
+        if (capacity is null)
+        {
+            Console.WriteLine("Invalid capacity.");
+            return;
+        }
+
+        garage = new Garage(capacity.Value);
+
+        Console.WriteLine($"Garage created with {capacity} parking spaces.");
+    }
+    
+   
 }
