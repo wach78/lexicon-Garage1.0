@@ -14,5 +14,10 @@ namespace GarageV1.Moduls
         }
 
         public int Length { get;}
+
+        public override string ToString()
+        {
+            return $"{base.ToString()}, Length: {Length}";
+        }
     }
 }

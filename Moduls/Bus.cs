@@ -13,5 +13,10 @@ namespace GarageV1.Moduls
         }
 
         public int NumberOfSeats { get;}
+
+        public override string ToString()
+        {
+            return $"{base.ToString()}, Number of seats: {NumberOfSeats}";
+        }
     }
 }

@@ -13,5 +13,10 @@ namespace GarageV1.Moduls
             CylinderVolume = cylinderVolume;
         }
         public int CylinderVolume { get;}
+
+        public override string ToString()
+        {
+            return $"{base.ToString()}, Cylinder Volume: {CylinderVolume}";
+        }
     }
 }

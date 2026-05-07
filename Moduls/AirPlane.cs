@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GarageV1.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,5 +13,10 @@ namespace GarageV1.Moduls
             NumberOfEngines = numberOfEngines;
         }
         public int NumberOfEngines { get;}
+
+        public override string ToString()
+        {
+            return $"{base.ToString()}, Number of engines: {NumberOfEngines}";
+        }
     }
 }

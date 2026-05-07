@@ -14,5 +14,10 @@ namespace GarageV1.Moduls
 
 
         public FuelType FuelType { get;}
+
+        public override string ToString()
+        {
+            return $"{base.ToString()}, Fuel type: {FuelType}";
+        }
     }
 }
