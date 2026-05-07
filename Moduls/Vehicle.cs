@@ -18,5 +18,10 @@ namespace GarageV1.Moduls
         public string Color { get;}
         public int NumberOfWheels { get;}
 
+        public override string ToString()
+        {
+            return $"Number plate: {NumberPlate} color: {Color} Number of wheels: {NumberOfWheels} ";
+        }
+
     }
 }
