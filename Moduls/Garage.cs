@@ -55,6 +55,17 @@ namespace GarageV1.Moduls
 
             return addedVehicles;
         }
-    }
 
+        public Vehicle[] GetParkedVehicles()
+        {
+            Vehicle[] result = new Vehicle[parkedVehicleCount];
+
+            for (int index = 0; index < parkedVehicleCount; index++)
+            {
+                result[index] = parkedVehicles[index]!;
+            }
+
+            return result;
+        }
+    }
 }

@@ -11,13 +11,9 @@ internal class Program
     {
         bool isRunning = true;
 
-        
-
-
         while (isRunning)
         {
             Menu();
-
 
             MenuChoice? menuChoice = ConsoleInputReader.ReadMainMenuChoice();
 
@@ -26,7 +22,7 @@ internal class Program
                 Console.WriteLine("Invalid choice");
                 Console.WriteLine();
                 continue;
-                
+
             }
 
             switch (menuChoice)
@@ -44,6 +40,10 @@ internal class Program
                     HandlePopulateGarage();
                     break;
 
+                case MenuChoice.ListParkedVehicles:
+                    HandleListAllVehicles();
+                    break;
+
                 default:
                     Console.WriteLine("Invalid choice");
                     break;
@@ -53,7 +53,6 @@ internal class Program
 
 
         }
-
     }
 
     private static void Menu()
@@ -106,6 +105,23 @@ internal class Program
         int addedVehicles = currentGarage.Populate();
 
         Console.WriteLine($"{addedVehicles} vehicles were added to the garage.");
+    }
+
+    private static void HandleListAllVehicles()
+    {
+        Garage? currentGarage = GetGarage();
+
+        if (currentGarage is null)
+        {
+            return;
+        }
+
+        Vehicle[] vehicles = currentGarage.GetParkedVehicles();
+
+        foreach (Vehicle vehicle in vehicles)
+        {
+            Console.WriteLine(vehicle);
+        }
     }
 
     private static Garage? GetGarage()
