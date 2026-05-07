@@ -40,6 +40,9 @@ internal class Program
                     HandleCreateGarage();
                     break;
 
+                case MenuChoice.PopulateGarage:
+                    HandlePopulateGarage();
+                    break;
 
                 default:
                     Console.WriteLine("Invalid choice");
@@ -90,6 +93,29 @@ internal class Program
 
         Console.WriteLine($"Garage created with {capacity} parking spaces.");
     }
-    
-   
+
+    private static void HandlePopulateGarage()
+    {
+        Garage? currentGarage = GetGarage();
+
+        if (currentGarage is null)
+        {
+            return;
+        }
+
+        int addedVehicles = currentGarage.Populate();
+
+        Console.WriteLine($"{addedVehicles} vehicles were added to the garage.");
+    }
+
+    private static Garage? GetGarage()
+    {
+        if (garage is null)
+        {
+            Console.WriteLine("You must create a garage first.");
+            return null;
+        }
+
+        return garage;
+    }
 }
