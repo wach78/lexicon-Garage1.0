@@ -11,7 +11,7 @@ namespace GarageV1.Enums
         ListVehicleTypes = 4,
         ParkVehicle = 5,
         RemoveVehicle = 6,
-        FindVehicleByRegistrationNumber = 7,
+        FindVehicleByPlateNumber = 7,
         SearchVehicles = 8
     }
 }
