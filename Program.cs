@@ -1,6 +1,7 @@
 ﻿using GarageV1.Enums;
 using GarageV1.Moduls;
 using GarageV1.UI;
+using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using System.Runtime.ConstrainedExecution;
 
@@ -51,6 +52,11 @@ internal class Program
 
                 case MenuChoice.ParkVehicle:
                     HandleParkedVehicle();
+                    break;
+
+
+                case MenuChoice.FindVehicleByPlateNumber:
+                    HandleFindVehicleByPlateNumber();
                     break;
 
                 default:
@@ -383,6 +389,40 @@ internal class Program
         AddVehicleResult result = currentGarage.Add(airplane);
 
         AddVehicleResultMessage(result);
+    }
+
+    private static void HandleRemoveVehicle()
+    {
+
+    }
+
+    private static void HandleFindVehicleByPlateNumber()
+    {
+        Garage? currentGarage = GetGarage();
+
+        if (currentGarage is null)
+        {
+            return;
+        }
+
+        if (!GarageHasVehicles(currentGarage))
+        {
+            return;
+        }
+
+        Console.WriteLine("Enter plate number");
+        string? platenumber = ConsoleInputReader.ReadRequiredString();
+
+        var vehicle = currentGarage.FindByPlateNumber(platenumber);
+
+        if (vehicle is null)
+        {
+            Console.WriteLine("Vehicle not found for plate number {platenumber}");
+        }
+        else
+        {
+            Console.WriteLine($"Vehicle found: {vehicle}");
+        }
     }
 
     private static Garage? GetGarage()

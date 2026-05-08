@@ -117,5 +117,26 @@ namespace GarageV1.Moduls
             return false;
         }
 
+        public Vehicle? FindByPlateNumber(string? numberPlate)
+        {
+            for (int index = 0; index < parkedVehicleCount; index++)
+            {
+                Vehicle? parkedVehicle = parkedVehicles[index];
+
+                if (parkedVehicle is not null &&
+                     string.Equals(
+                        parkedVehicle.NumberPlate,
+                        numberPlate,
+                        StringComparison.OrdinalIgnoreCase
+                    )
+                )
+                {
+                    return parkedVehicle;
+                }
+            }
+
+            return null;
+        }
+
     }
 }
