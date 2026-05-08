@@ -96,13 +96,19 @@ namespace GarageV1.Moduls
             return vehicleTypeCounts;
         }
 
-        private bool PlateNumberExists(string numberPlate)
+        private int FindIndexByPlateNumber(string? numberPlate)
         {
+            if (string.IsNullOrWhiteSpace(numberPlate))
+            {
+                return -1;
+            }
+
             for (int index = 0; index < parkedVehicleCount; index++)
             {
                 Vehicle? parkedVehicle = parkedVehicles[index];
 
-                if (parkedVehicle is not null &&
+                if (
+                    parkedVehicle is not null &&
                     string.Equals(
                         parkedVehicle.NumberPlate,
                         numberPlate,
@@ -110,33 +116,48 @@ namespace GarageV1.Moduls
                     )
                 )
                 {
-                    return true;
+                    return index;
                 }
             }
 
-            return false;
+            return -1;
+        }
+
+        private bool PlateNumberExists(string numberPlate)
+        {
+            return FindIndexByPlateNumber(numberPlate) != -1;
         }
 
         public Vehicle? FindByPlateNumber(string? numberPlate)
         {
-            for (int index = 0; index < parkedVehicleCount; index++)
-            {
-                Vehicle? parkedVehicle = parkedVehicles[index];
+            int vehicleIndex = FindIndexByPlateNumber(numberPlate);
 
-                if (parkedVehicle is not null &&
-                     string.Equals(
-                        parkedVehicle.NumberPlate,
-                        numberPlate,
-                        StringComparison.OrdinalIgnoreCase
-                    )
-                )
-                {
-                    return parkedVehicle;
-                }
+            if (vehicleIndex == -1)
+            {
+                return null;
             }
 
-            return null;
+            return parkedVehicles[vehicleIndex];
         }
 
+        public bool RemoveByPlateNumber(string? numberPlate)
+        {
+            int vehicleIndex = FindIndexByPlateNumber(numberPlate);
+
+            if (vehicleIndex == -1)
+            {
+                return false;
+            }
+
+            for (int moveIndex = vehicleIndex; moveIndex < parkedVehicleCount - 1; moveIndex++)
+            {
+                parkedVehicles[moveIndex] = parkedVehicles[moveIndex + 1];
+            }
+
+            parkedVehicles[parkedVehicleCount - 1] = null;
+            parkedVehicleCount--;
+
+            return true;
+        }
     }
 }
