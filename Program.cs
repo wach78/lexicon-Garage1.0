@@ -68,8 +68,6 @@ internal class Program
             }
 
             Console.WriteLine();
-
-
         }
     }
 
@@ -415,11 +413,11 @@ internal class Program
 
         if (isDeleted is true)
         {
-            Console.WriteLine("Vehicle removed for plate number {platenumber}");
+            Console.WriteLine($"Vehicle removed for plate number {platenumber}");
         }
         else
         {
-            Console.WriteLine("Vehicle not found for plate number {platenumber}");
+            Console.WriteLine($"Vehicle not found for plate number {platenumber}");
         }
 
     }
@@ -445,7 +443,7 @@ internal class Program
 
         if (vehicle is null)
         {
-            Console.WriteLine("Vehicle not found for plate number {platenumber}");
+            Console.WriteLine($"Vehicle not found for plate number {platenumber}");
         }
         else
         {
