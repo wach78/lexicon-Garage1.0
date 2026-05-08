@@ -32,5 +32,44 @@ namespace GarageV1.UI
 
             return null;
         }
+
+        public static VehicleTypeChoice? ReadVehicleTypeChoice()
+        {
+            string? input = Console.ReadLine();
+
+            if (
+                int.TryParse(input, out int numericChoice)
+                && Enum.IsDefined(typeof(VehicleTypeChoice), numericChoice)
+            )
+            {
+                return (VehicleTypeChoice)numericChoice;
+            }
+
+            return null;
+        }
+
+        public static string? ReadRequiredString()
+        {
+            string? input = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                return null;
+            }
+
+            return input.Trim();
+        }
+
+        public static int? ReadZeroOrPositiveInt()
+        {
+            string? input = Console.ReadLine();
+
+            if (int.TryParse(input, out int value) && value >= 0)
+            {
+                return value;
+            }
+
+            return null;
+        }
     }
 }

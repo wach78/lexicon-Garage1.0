@@ -20,17 +20,24 @@ namespace GarageV1.Moduls
 
         public bool IsEmpty => parkedVehicleCount == 0;
 
-        public bool Add(Vehicle vehicle)
+        public AddVehicleResult Add(Vehicle vehicle)
         {
             if (parkedVehicleCount >= Capacity)
             {
-                return false;
+                return AddVehicleResult.GarageFull;
             }
+
+            if (PlateNumberExists(vehicle.NumberPlate))
+            {
+
+                return AddVehicleResult.DuplicatePlateNumber;
+            }
+                
 
             parkedVehicles[parkedVehicleCount] = vehicle;
             parkedVehicleCount++;
 
-            return true;
+            return AddVehicleResult.Success;
         }
 
         public int Populate()
@@ -49,7 +56,9 @@ namespace GarageV1.Moduls
 
             foreach (Vehicle vehicle in vehicles)
             {
-                if (Add(vehicle))
+                AddVehicleResult result = Add(vehicle);
+
+                if (result == AddVehicleResult.Success)
                 {
                     addedVehicles++;
                 }
@@ -87,6 +96,26 @@ namespace GarageV1.Moduls
             return vehicleTypeCounts;
         }
 
+        private bool PlateNumberExists(string numberPlate)
+        {
+            for (int index = 0; index < parkedVehicleCount; index++)
+            {
+                Vehicle? parkedVehicle = parkedVehicles[index];
+
+                if (parkedVehicle is not null &&
+                    string.Equals(
+                        parkedVehicle.NumberPlate,
+                        numberPlate,
+                        StringComparison.OrdinalIgnoreCase
+                    )
+                )
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
     }
 }
