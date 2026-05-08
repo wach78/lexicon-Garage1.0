@@ -54,6 +54,9 @@ internal class Program
                     HandleParkedVehicle();
                     break;
 
+                case MenuChoice.RemoveVehicle:
+                    HandleRemoveVehicle();
+                    break;
 
                 case MenuChoice.FindVehicleByPlateNumber:
                     HandleFindVehicleByPlateNumber();
@@ -393,6 +396,31 @@ internal class Program
 
     private static void HandleRemoveVehicle()
     {
+        Garage? currentGarage = GetGarage();
+
+        if (currentGarage is null)
+        {
+            return;
+        }
+
+        if (!GarageHasVehicles(currentGarage))
+        {
+            return;
+        }
+
+        Console.Write("Enter plate number:");
+        string? platenumber = ConsoleInputReader.ReadRequiredString();
+
+        var isDeleted = currentGarage.RemoveByPlateNumber(platenumber);
+
+        if (isDeleted is true)
+        {
+            Console.WriteLine("Vehicle removed for plate number {platenumber}");
+        }
+        else
+        {
+            Console.WriteLine("Vehicle not found for plate number {platenumber}");
+        }
 
     }
 
@@ -410,7 +438,7 @@ internal class Program
             return;
         }
 
-        Console.WriteLine("Enter plate number");
+        Console.Write("Enter plate number:");
         string? platenumber = ConsoleInputReader.ReadRequiredString();
 
         var vehicle = currentGarage.FindByPlateNumber(platenumber);
