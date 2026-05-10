@@ -1,75 +1,118 @@
 ﻿using GarageV1.Enums;
 
-namespace GarageV1.UI
+namespace GarageV1.UI;
+
+internal static class ConsoleInputReader
 {
-    internal static class ConsoleInputReader
+    public static MenuChoice? ReadMainMenuChoice()
     {
-        public static MenuChoice? ReadMainMenuChoice()
+
+        string? input = Console.ReadLine();
+
+        if (
+            int.TryParse(input, out int numericChoice)
+            && Enum.IsDefined(typeof(MenuChoice), numericChoice)
+        )
         {
-     
-            string? input = Console.ReadLine();
+            return (MenuChoice)numericChoice;
+        }
 
-            if (
-                int.TryParse(input, out int numericChoice)
-                && Enum.IsDefined(typeof(MenuChoice), numericChoice)
-            )
-            {
-                return (MenuChoice)numericChoice;
-            }
+        return null;
+    }
 
+
+    public static int? ReadPositiveInt()
+    {
+        string? input = Console.ReadLine();
+
+        if (int.TryParse(input, out int value) && value > 0)
+        {
+            return value;
+        }
+
+        return null;
+    }
+
+    public static VehicleTypeChoice? ReadVehicleTypeChoice()
+    {
+        string? input = Console.ReadLine();
+
+        if (
+            int.TryParse(input, out int numericChoice)
+            && Enum.IsDefined(typeof(VehicleTypeChoice), numericChoice)
+        )
+        {
+            return (VehicleTypeChoice)numericChoice;
+        }
+
+        return null;
+    }
+
+    public static string? ReadRequiredString()
+    {
+        string? input = Console.ReadLine();
+
+        if (string.IsNullOrWhiteSpace(input))
+        {
             return null;
-         }
-        
+        }
 
-        public static int? ReadPositiveInt()
+        return input.Trim();
+    }
+
+    public static int? ReadZeroOrPositiveInt()
+    {
+        string? input = Console.ReadLine();
+
+        if (int.TryParse(input, out int value) && value >= 0)
         {
-            string? input = Console.ReadLine();
+            return value;
+        }
 
-            if (int.TryParse(input, out int value) && value > 0)
-            {
-                return value;
-            }
+        return null;
+    }
 
+    public static string? ReadOptionalString()
+    {
+        string? input = Console.ReadLine();
+
+        if (string.IsNullOrWhiteSpace(input))
+        {
             return null;
         }
 
-        public static VehicleTypeChoice? ReadVehicleTypeChoice()
+        return input.Trim();
+    }
+
+    public static int? ReadOptionalZeroOrPositiveInt()
+    {
+        string? input = Console.ReadLine();
+
+        if (string.IsNullOrWhiteSpace(input))
         {
-            string? input = Console.ReadLine();
-
-            if (
-                int.TryParse(input, out int numericChoice)
-                && Enum.IsDefined(typeof(VehicleTypeChoice), numericChoice)
-            )
-            {
-                return (VehicleTypeChoice)numericChoice;
-            }
-
             return null;
         }
 
-        public static string? ReadRequiredString()
+        if (int.TryParse(input, out int value) && value >= 0)
         {
-            string? input = Console.ReadLine();
-
-            if (string.IsNullOrWhiteSpace(input))
-            {
-                return null;
-            }
-
-            return input.Trim();
+            return value;
         }
 
-        public static int? ReadZeroOrPositiveInt()
+        return null;
+    }
+
+    public static SearchVehicleTypes? ReadSearchVehicleTypeChoice()
+    {
+        string? input = Console.ReadLine();
+
+        if (
+            int.TryParse(input, out int numericChoice) &&
+            Enum.IsDefined(typeof(SearchVehicleTypes), numericChoice)
+        )
         {
-            string? input = Console.ReadLine();
-
-            if (int.TryParse(input, out int value) && value >= 0)
-            {
-                return value;
-            }
-
-            return null;
+            return (SearchVehicleTypes)numericChoice;
         }
+
+        return null;
     }
 }

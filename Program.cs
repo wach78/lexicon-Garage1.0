@@ -1,9 +1,13 @@
 ﻿using GarageV1.Enums;
 using GarageV1.Moduls;
 using GarageV1.UI;
+using System.Collections;
+using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using System.Runtime.ConstrainedExecution;
+using System.Security.Cryptography;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 internal class Program
 {
@@ -24,7 +28,6 @@ internal class Program
                 Console.WriteLine("Invalid choice");
                 Console.WriteLine();
                 continue;
-
             }
 
             switch (menuChoice)
@@ -60,6 +63,10 @@ internal class Program
 
                 case MenuChoice.FindVehicleByPlateNumber:
                     HandleFindVehicleByPlateNumber();
+                    break;
+
+                case MenuChoice.SearchVehicles:
+                    HandleSearchVehicle();
                     break;
 
                 default:
@@ -179,7 +186,7 @@ internal class Program
 
         var vehicleTypeCounts = currentGarage.GetParkedVehicleTypeCounts();
 
-        foreach (KeyValuePair<string, int> vehicleTypeCount in vehicleTypeCounts)
+        foreach (DictionaryEntry vehicleTypeCount in vehicleTypeCounts)
         {
             Console.WriteLine($"{vehicleTypeCount.Key}: {vehicleTypeCount.Value}");
         }
@@ -509,6 +516,88 @@ internal class Program
         }
 
         return new CommonVehicleData(numberPlate, color, numberOfWheels.Value);
+    }
+
+    private static void SearchVehicleTypeMenu()
+    {
+        Console.Write(
+         $"""
+        Search vehicles by filters.
+        Choose vehicle type.
+
+        {(int)SearchVehicleTypes.All} = All vehicle types
+        {(int)SearchVehicleTypes.Car} = Car
+        {(int)SearchVehicleTypes.Motorcycle} = Motorcycle
+        {(int)SearchVehicleTypes.Bus} = Bus
+        {(int)SearchVehicleTypes.Boat} = Boat
+        {(int)SearchVehicleTypes.Airplane} = Airplane
+
+        Your choice:
+        """
+        );
+    }
+
+    private static void HandleSearchVehicle()
+    {
+        Garage? currentGarage = GetGarage();
+
+        if (currentGarage is null)
+        {
+            return;
+        }
+
+        if (!GarageHasVehicles(currentGarage))
+        {
+            return;
+        }
+
+        SearchVehicleTypeMenu();
+
+        SearchVehicleTypes? searchVehicleTypeChoice = ConsoleInputReader.ReadSearchVehicleTypeChoice();
+
+        if (searchVehicleTypeChoice is null)
+        {
+            Console.WriteLine("Invalid vehicle type.");
+            return;
+        }
+
+        Type? vehicleType = GetVehicleTypeFromSearchChoice(searchVehicleTypeChoice.Value);
+
+        Console.Write("Enter color, or press Enter for any color:");
+
+        string? color = ConsoleInputReader.ReadOptionalString();
+
+        Console.Write("Enter number of wheels, or press Enter for any number:");
+        int? numberOfWheels = ConsoleInputReader.ReadOptionalZeroOrPositiveInt();
+
+        Vehicle[] vehicles = currentGarage.SearchVehicles(color, numberOfWheels, vehicleType);
+
+        if (vehicles.Length == 0)
+        {
+            Console.WriteLine("No vehicles matched the search.");
+            return;
+        }
+
+        foreach (Vehicle vehicle in vehicles)
+        {
+            Console.WriteLine(vehicle);
+        }
+
+
+    }
+
+    private static Type? GetVehicleTypeFromSearchChoice(SearchVehicleTypes searchVehicleTypeChoice)
+    {
+        return searchVehicleTypeChoice switch
+        {
+            SearchVehicleTypes.All => null,
+            SearchVehicleTypes.Car => typeof(Car),
+            SearchVehicleTypes.Motorcycle => typeof(MotorCycle),
+            SearchVehicleTypes.Bus => typeof(Bus),
+            SearchVehicleTypes.Boat => typeof(Boat),
+            SearchVehicleTypes.Airplane => typeof(AirPlane),
+            _ => null
+        };
     }
 
     private static void AddVehicleResultMessage(AddVehicleResult result)
