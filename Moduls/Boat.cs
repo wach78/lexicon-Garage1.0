@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GarageV1.Moduls
 {
-    internal class Boat: Vehicle
+    public class Boat: Vehicle
     {
         public Boat(string numberPlate, string color, int numberOfWheels, int length)
         : base(numberPlate, color, numberOfWheels)

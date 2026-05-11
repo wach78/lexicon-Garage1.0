@@ -2,7 +2,7 @@
 
 namespace GarageV1.Enums;
 
-internal enum FuelType
+public enum FuelType
 {
     Gasoline,
     Diesel

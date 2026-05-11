@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GarageV1.Moduls
 {
-    internal class Vehicle
+    public class Vehicle
     {
 
         public Vehicle(string numberPlate, string color, int numberOfWheels)
@@ -20,7 +20,7 @@ namespace GarageV1.Moduls
 
         public override string ToString()
         {
-            return $"Number plate: {NumberPlate} color: {Color} Number of wheels: {NumberOfWheels} ";
+            return $"Number plate: {NumberPlate} color: {Color} Number of wheels: {NumberOfWheels}";
         }
 
     }

@@ -4,7 +4,7 @@ using Microsoft.VisualBasic;
 
 namespace GarageV1.Moduls
 {
-    internal class Car: Vehicle
+    public class Car: Vehicle
     {
         public Car(string numberPlate, string color, int numberOfWheels, FuelType fuelType)
         : base(numberPlate, color, numberOfWheels)
