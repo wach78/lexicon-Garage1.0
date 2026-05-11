@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GarageV1.Moduls;
 
-internal class Garage
+public class Garage
 {
     private readonly Vehicle[] parkedVehicles;
     private int parkedVehicleCount;

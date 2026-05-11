@@ -1,6 +1,6 @@
 ﻿namespace GarageV1.Enums;
 
-internal enum AddVehicleResult
+public enum AddVehicleResult
 {
     Success,
     GarageFull,
