@@ -19,7 +19,7 @@ internal class Program
 
         while (isRunning)
         {
-            Menu();
+            ConsoleMenu.Menu();
 
             MenuChoice? menuChoice = ConsoleInputReader.ReadMainMenuChoice();
 
@@ -76,45 +76,6 @@ internal class Program
 
             Console.WriteLine();
         }
-    }
-
-    private static void Menu()
-    {
-        Console.Write(
-            $"""
-            Welcome to the main menu.
-            Enter a number to choose an option.
-
-            {(int)MenuChoice.CreateGarage} = Create garage
-            {(int)MenuChoice.PopulateGarage} = Populate garage with vehicles
-            {(int)MenuChoice.ListParkedVehicles} = List all parked vehicles
-            {(int)MenuChoice.ListVehicleTypes} = List vehicle types and count
-            {(int)MenuChoice.ParkVehicle} = Park a vehicle
-            {(int)MenuChoice.RemoveVehicle} = Remove a vehicle
-            {(int)MenuChoice.FindVehicleByPlateNumber} = Find vehicle by plate number
-            {(int)MenuChoice.SearchVehicles} = Search vehicles
-            {(int)MenuChoice.Exit} = Exit
-
-            Your choice:
-            """
-        );
-    }
-
-    private static void VehicleTypeMenu()
-    {
-        Console.Write(
-            $"""
-            Choose vehicle type:
-            {(int)VehicleTypeChoice.Car} = Car
-            {(int)VehicleTypeChoice.Motorcycle} = Motorcycle
-            {(int)VehicleTypeChoice.Bus} = Bus
-            {(int)VehicleTypeChoice.Boat} = Boat
-            {(int)VehicleTypeChoice.Airplane} = Airplane
-            {(int)VehicleTypeChoice.Back} = Back to main menu
-
-            Your choice:
-            """
-        );
     }
 
     private static void HandleCreateGarage()
@@ -202,7 +163,7 @@ internal class Program
             return;
         }
 
-        VehicleTypeMenu();
+        ConsoleMenu.VehicleTypeMenu();
 
         VehicleTypeChoice? vehicleTypeChoice = ConsoleInputReader.ReadVehicleTypeChoice();
 
@@ -518,25 +479,6 @@ internal class Program
         return new CommonVehicleData(numberPlate, color, numberOfWheels.Value);
     }
 
-    private static void SearchVehicleTypeMenu()
-    {
-        Console.Write(
-         $"""
-        Search vehicles by filters.
-        Choose vehicle type.
-
-        {(int)SearchVehicleTypes.All} = All vehicle types
-        {(int)SearchVehicleTypes.Car} = Car
-        {(int)SearchVehicleTypes.Motorcycle} = Motorcycle
-        {(int)SearchVehicleTypes.Bus} = Bus
-        {(int)SearchVehicleTypes.Boat} = Boat
-        {(int)SearchVehicleTypes.Airplane} = Airplane
-
-        Your choice:
-        """
-        );
-    }
-
     private static void HandleSearchVehicle()
     {
         Garage? currentGarage = GetGarage();
@@ -551,7 +493,7 @@ internal class Program
             return;
         }
 
-        SearchVehicleTypeMenu();
+        ConsoleMenu.SearchVehicleTypeMenu();
 
         SearchVehicleTypes? searchVehicleTypeChoice = ConsoleInputReader.ReadSearchVehicleTypeChoice();
 
